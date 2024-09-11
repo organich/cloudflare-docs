@@ -163,6 +163,9 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to d
 
   * Configures limits to be imposed on execution at runtime. Refer to [Limits](#limits).
 
+* `observability` object optional
+
+  * Configures automatic observability settings for telemetry data emitted from your Worker. Refer to [Observability](#observability).
 
 
 ### Usage model
@@ -676,6 +679,33 @@ id = "<NAMESPACE_ID1>"
 [[kv_namespaces]]
 binding = "<BINDING_NAME2>"
 id = "<NAMESPACE_ID2>"
+```
+
+### Observability
+
+The [Observability](/workers/observability) binding provides your Worker with automatic persistent logs that can be searched, filtered, and queried directly from the Workers dashboard. 
+
+* `enabled` boolean required
+  * When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+
+* `head_sampling_rate` number optional
+  * Head sampling applies a probabilistic sampling decision at the beginning of the request when there is no context. Customers with high traffic volume who want a simple configuration to reduce their logging footprint can use `head_sampling_rate` to efficiently reduce their volume.
+
+:::
+
+Example:
+
+```toml title="wrangler.toml"
+[observability]
+enabled = true
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1
+
+[observability]
+enabled = false
+head_sampling_rate = 0.05
 ```
 
 ### Queues
